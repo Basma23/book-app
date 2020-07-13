@@ -6,7 +6,7 @@ const { request, response } = require('express');
 require('dotenv').config();
 const PORT = process.env.PORT;
 const server = express();
-server.use(cors());
+// server.use(cors());
 server.use(express.static('./public'));
 server.use(express.json());
 server.use(express.urlencoded({extended: true}));
@@ -14,26 +14,32 @@ server.set('view engine', 'ejs');
 server.get('/', (request, response) =>{
     response.render('pages/index');
 });
-server.get('/searches/new', outpot);
-function outpot(request, response){
-    let url = `https://www.googleapis.com/books/v1/volumes?q=` 
-    // if(request.body.search[1] === 'title'){
-    //     url += `+intitle:${request.body.search[0]}`;
-    // }else if(request.body.search[1] === 'aouthor'){
-    //     url += `+inauthor:${request.body.search[0]}`;
-    // }
-    // return souperagent.get(url).then(resOfShearch =>{
-    //     resOfShearch.body.items.map(result =>{
-    //         new Book(result.info).then(output =>{
-    //             response.render('pages/searches/new', {output: output.body});
-    //         });
-    //     });
-    // });
-    response.render('pages/searches/new');
-};
+server.get('/searches/new', (req, res) => {
+    res.render('pages/searches/new')
+});
+server.post('/searches', (request, response) =>{
+    console.log('Get request', request.body);
+    let search = request.body.searchBox;
+    let url = `https://www.googleapis.com/books/v1/volumes?q=+` 
+    if(request.body.search === 'title'){
+        url += `intitle:${search}`;
+    }else if(request.body.search === 'author'){
+        url += `inauthor:${search}`;
+    }
+    souperagent.get(url).then(resOfShearch =>{
+        let data = resOfShearch.body.items;
+        let books = data.map(element =>{
+            let newBook = new Book(element);
+            return newBook;
+        });
+        response.render('pages/searches/show', {outpotBooks: books});
+    });
+});
 function Book(info){
-    this.title = info.title;
-    this.author = info.author;
+    this.title = info.volumeInfo.title;
+    this.author = info.volumeInfo.author;
+    this.img = info.volumeInfo.imageLinks.thumbnail;
+    this.description = info.volumeInfo.description;
     const missingImgs = `https://i.imgur.com/J5LVHEL.jpg`;
 }
 
