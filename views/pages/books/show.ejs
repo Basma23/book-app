@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<%- include('../../layout/head') %>
+
+<body>
+  <%- include('../../layout/header') %>
+
+  <main>
+    <ul>
+      <li>
+        <%- include('detail', {book: bookDetails}) %>
+      </li>
+    </ul>
+  </main>
+  <%- include('../layout/footer') %>
+</body>
+</html>

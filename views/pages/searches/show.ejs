@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
     <link rel="stylesheet" href="styles/reset.css">
     <title>Best Books!</title>
 </head>
+
 <body>
     <header>
         <h1>Best Books!</h1>
@@ -23,13 +26,29 @@
     <main>
         <section>
             <% outpotBooks.forEach(element =>{ %>
-                <h2><%= element.title %></h2>
-                <h3><%= element.author %></h3>
-                <img src="<%= element.img %>" alt="">
-                <p><%= element.description %></p>
+            <img src="<%= element.img %>" alt="">
+            <h2><%= element.title %></h2>
+            <h3><%= element.author %></h3>
+            <p><%= element.description %></p>
+            <p><%= element.isbn %></p>
+            <p><%= element.bookshelf %></p>
+            <button id="form">Select This Book</button>
+            <form method="post" class="hidden">
+                <input type="text" name="title" placeholder="Title" value="<%= element.title %>" />
+                <input type="text" name="author" placeholder="Author" value="<%= element.author %>" />
+                <input type="text" name="isbn" placeholder="Isbn" value="<%= element.isbn %>" />
+                <textarea name="description" placeholder="Description" value="<%= element.description %>" rows="7"
+                    cols="50"></textarea>
+                <input type="text" name="bookshelf" placeholder="Book Shelf" value="<%= element.bookshelf %>" />
+                <input type="text" name="image_url" placeholder="https://www.googleapis.com/books/v1/volumes?q="
+                    value="<%= element.image_url %>" />
+            </form>
+            <button type="submit"><a href="/books/<%= element.id %>">Add to Database</a></button>
             <% }); %>
         </section>
     </main>
     <footer></footer>
+    <script src="/public/js/app.js"></script>
 </body>
+
 </html>
