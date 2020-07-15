@@ -6,6 +6,8 @@ const pg = require('pg');
 const cors = require('cors');
 require('ejs');
 require('dotenv').config();
+const methodOverride = require('method-override');
+server.use(methodOverride('_method'));
 const PORT = process.env.PORT;
 const client = new pg.Client(process.env.DATABASE_URL);
 const server = express();
@@ -20,6 +22,7 @@ server.get('/searches/new', newSearch);
 server.post('/searches', searchResult);
 server.post('/books', addingBooks);
 server.get('/books/:book_id', bookDetails);
+server.get('/books/:book_id', ubdateBook);
 server.get('*', notFound);
 
 
@@ -84,6 +87,14 @@ function Book(info){
     this.isbn = info.volumeInfo.industryIdentifiers ? info.volumeInfo.industryIdentifiers[0].identifier : "Not Exists";
     this.bookshelf = info.volumeInfo.categories ? info.volumeInfo.categories : "Not under a class";
 };
+
+function ubdateBook(request, response){
+    let SQL = `UPDATE booksdb SET title=$1, author=$2, description=$3, image_url=$4, bookshell=$5 WHERE ID =$6;`;
+  let assignValues = [request.body.title, request.body.author, request.body.description, request.body.description.isbn, request.body.bookshelf, request.params.book_id];
+  client.query(SQL, assignValues).then(() => {
+      response.redirect('/');
+  })
+}
 
 function notFound(request, response){
     response.status(404).send('404 not found');

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<%- include('../../layout/head') %>
+
+<body>
+    <%- include('../../layout/header') %>
+
+    <main>
+        <form action="/books/<%= book.id %>?_method=put" method="post">
+            <input type="text" name="title" placeholder="Populated Title" value="<%= book.title %>" />
+            <input type="text" name="author" placeholder="Populated Author" value="<%= book.author %>" />
+            <input type="text" name="isbn" placeholder="Populated ISBN" value="<%= book.isbn %>" />
+            <input type="text" name="image_url" placeholder="https://www.googleapis.com/books/v1/volumes?q="
+            value="<%= book.image_url %>" />
+            <textarea name="description" placeholder="Populated Description" value="<%= book.description %>" rows="7"
+                cols="50"></textarea>
+            <input type="text" name="bookshelf" placeholder="Populated Book Shelf" value="<%= book.bookshelf %>" />
+            <button>Update Book</button>
+        </form>
+    </main>
+    <%- include('../../layout/footer') %>
+</body>
+
+</html>
