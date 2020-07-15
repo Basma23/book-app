@@ -1,5 +1,5 @@
 'use strict';
 
-$('#form').onclick(() =>{
-    $('form').toggleClass('hiden');
+$('.form').click(function () {
+    $(this).parent().find('.hidden').slideToggle();
 });

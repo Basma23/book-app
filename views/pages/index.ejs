@@ -1,16 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('../layout/head') %>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Books!</title>
+</head>
+
 <body>
-    <%- include('../layout/header') %>
+    <header>
+        <h1>Best Books!</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/searches/new">Search the Google Books API</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
         <h3><%= numOfSavedBooks %> Saved Books</h3>
-        <% books.forEach(element =>{ %>
-            <section>
-                <%- include('books/detail', {book: element}) %>    
-            </section>
-        <% }); %>
+        <section>
+            <% books.forEach(book =>{ %>
+            <div>
+                <img src="<%= book.img %>">
+                <h2><%= book.title %></h2>
+                <h3><%= book.author %></h3>
+                <button><a href="/books/<%= book.id %>">View Details</a></button>
+            </div>
+            <% }); %>
+        </section>
     </main>
-    <%- include('../layout/footer') %>
 </body>
+
 </html>
