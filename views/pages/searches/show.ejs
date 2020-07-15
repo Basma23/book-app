@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/layout.css">
-    <link rel="stylesheet" href="styles/modules.css">
-    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="/styles/modules.css">
     <title>Best Books!</title>
 </head>
+
 <body>
     <header>
         <h1>Best Books!</h1>
@@ -22,14 +20,32 @@
     </header>
     <main>
         <section>
-            <% outpotBooks.forEach(element =>{ %>
-                <h2><%= element.title %></h2>
-                <h3><%= element.author %></h3>
-                <img src="<%= element.img %>" alt="">
-                <p><%= element.description %></p>
+            <% books.forEach(book =>{ %>
+            <div>
+                <img src="<%= book.img %>">
+                <h2><%= book.title %></h2>
+                <h3><%= book.author %></h3>
+                <p><%= book.description %></p>
+                <p><%= book.isbn %></p>
+                <p><%= book.bookshelf%></p>
+                <button class="form">Select This Book</button>
+                <form action="/books" method="post" class="hidden">
+                    <input type="text" name="title" placeholder="Title" value="<%= book.title %>" />
+                    <input type="text" name="author" placeholder="Author" value="<%= book.author %>" />
+                    <input type="text" name="isbn" placeholder="Isbn" value="<%= book.isbn %>" />
+                    <textarea name="description" placeholder="Description" value="<%= book.description %>" rows="7"
+                        cols="50"></textarea>
+                    <input type="text" name="bookshelf" placeholder="Book Shelf" value="<%= book.bookshelf %>" />
+                    <input type="text" name="image_url" placeholder="https://www.googleapis.com/books/v1/volumes?q="
+                        value="<%= book.image_url %>" />
+                    <button>Add to Database</button>
+                </form>
+            </div>
             <% }); %>
         </section>
     </main>
-    <footer></footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="/js/app.js"></script>
 </body>
+
 </html>

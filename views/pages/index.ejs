@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/layout.css">
-    <link rel="stylesheet" href="styles/modules.css">
-    <link rel="stylesheet" href="styles/reset.css">
     <title>Best Books!</title>
 </head>
+
 <body>
     <header>
         <h1>Best Books!</h1>
@@ -21,8 +18,18 @@
         </nav>
     </header>
     <main>
-        
+        <h3><%= numOfSavedBooks %> Saved Books</h3>
+        <section>
+            <% books.forEach(book =>{ %>
+            <div>
+                <img src="<%= book.img %>">
+                <h2><%= book.title %></h2>
+                <h3><%= book.author %></h3>
+                <button><a href="/books/<%= book.id %>">View Details</a></button>
+            </div>
+            <% }); %>
+        </section>
     </main>
-    <footer></footer>
 </body>
+
 </html>
