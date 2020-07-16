@@ -6,11 +6,11 @@ const pg = require('pg');
 const cors = require('cors');
 require('ejs');
 require('dotenv').config();
-const methodOverride = require('method-override');
-server.use(methodOverride('_method'));
 const PORT = process.env.PORT;
 const client = new pg.Client(process.env.DATABASE_URL);
 const server = express();
+const methodOverride = require('method-override');
+server.use(methodOverride('_method'));
 server.use(cors());
 server.use(express.static('./public'));
 server.use(express.json());
@@ -22,7 +22,8 @@ server.get('/searches/new', newSearch);
 server.post('/searches', searchResult);
 server.post('/books', addingBooks);
 server.get('/books/:book_id', bookDetails);
-server.get('/books/:book_id', ubdateBook);
+server.put('/books/:book_id', ubdateBook);
+server.delete('/books/:book_id', deleteBook);
 server.get('*', notFound);
 
 
@@ -78,6 +79,24 @@ function bookDetails(request, response){
     });
 };
 
+function ubdateBook(request, response){
+    let SQL = `UPDATE books SET title=$1, author=$2, description=$3, image_url=$4, bookshelf=$5, isbn=$6 WHERE ID =$7;`;
+    let {title, author, description, image_url, bookshelf, isbn} = request.body;
+    let id = request.params.book_id;
+    let assignValues = [title, author, description, image_url, bookshelf, isbn, id];
+    client.query(SQL, assignValues).then(output => {
+      response.redirect(`/books/${id}`);
+  });
+};
+
+function deleteBook(request, response){
+    let SQL = `DELETE FROM books WHERE id=$1;`
+    let assignValues=[request.params.book_id];
+    client.query(SQL,assignValues).then(()=>{
+        response.redirect('/')
+    })
+}
+
 function Book(info){
     const missingImgs = `https://i.imgur.com/J5LVHEL.jpg`;
     this.title = info.volumeInfo.title ? info.volumeInfo.title : "No Name Avaliable";
@@ -88,16 +107,8 @@ function Book(info){
     this.bookshelf = info.volumeInfo.categories ? info.volumeInfo.categories : "Not under a class";
 };
 
-function ubdateBook(request, response){
-    let SQL = `UPDATE booksdb SET title=$1, author=$2, description=$3, image_url=$4, bookshell=$5 WHERE ID =$6;`;
-  let assignValues = [request.body.title, request.body.author, request.body.description, request.body.description.isbn, request.body.bookshelf, request.params.book_id];
-  client.query(SQL, assignValues).then(() => {
-      response.redirect('/');
-  })
-}
-
 function notFound(request, response){
-    response.status(404).send('404 not found');
+    response.render('pages/error');
 };
 
 server.use((error, request, response) => {
