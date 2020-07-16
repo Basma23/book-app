@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/layout.css">
     <link rel="stylesheet" href="/styles/modules.css">
+    <link rel="stylesheet" href="/styles/reset.css">
     <title>Best Books!</title>
 </head>
 
@@ -19,26 +22,28 @@
         </nav>
     </header>
     <main>
-        <section>
+        <section id="info">
             <% books.forEach(book =>{ %>
-            <div>
+            <div class="bookInfo">
                 <img src="<%= book.img %>">
-                <h2><%= book.title %></h2>
-                <h3><%= book.author %></h3>
-                <p><%= book.description %></p>
-                <p><%= book.isbn %></p>
-                <p><%= book.bookshelf%></p>
+                <div class="book">
+                    <h2><%= book.title %></h2>
+                    <h3><%= book.author %></h3>
+                    <!-- <p><%= book.description %></p> -->
+                    <p><%= book.isbn %></p>
+                    <p><%= book.bookshelf%></p>
+                </div>
                 <button class="form">Select This Book</button>
                 <form action="/books" method="post" class="hidden">
-                    <input type="text" name="title" placeholder="Title" value="<%= book.title %>" />
-                    <input type="text" name="author" placeholder="Author" value="<%= book.author %>" />
-                    <input type="text" name="isbn" placeholder="Isbn" value="<%= book.isbn %>" />
+                    <input type="text" name="title" placeholder="Title" value="<%= book.title %>" id="bookTitle">
+                    <input type="text" name="author" placeholder="Author" value="<%= book.author %>" id="bookAuthor"/>
+                    <input type="text" name="isbn" placeholder="Isbn" value="<%= book.isbn %>" id="bookISBN"/>
                     <textarea name="description" placeholder="Description" value="<%= book.description %>" rows="7"
-                        cols="50"></textarea>
-                    <input type="text" name="bookshelf" placeholder="Book Shelf" value="<%= book.bookshelf %>" />
+                        cols="30" id="bookDesc"></textarea>
+                    <input type="text" name="bookshelf" placeholder="Book Shelf" value="<%= book.bookshelf %>" id="bookShelf"/>
                     <input type="text" name="image_url" placeholder="https://www.googleapis.com/books/v1/volumes?q="
-                        value="<%= book.image_url %>" />
-                    <button>Add to Database</button>
+                        value="<%= book.image_url %>" id="bookURL"/>
+                    <button id="addBook">Add to Database</button>
                 </form>
             </div>
             <% }); %>

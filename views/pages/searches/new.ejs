@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/modules.css">
+    <link rel="stylesheet" href="/styles/reset.css">
     <title>Best Books!</title>
 </head>
+
 <body>
     <header>
         <h1>Best Books!</h1>
@@ -16,15 +22,20 @@
         </nav>
     </header>
     <main>
-        <h2>Search by Title or Author</h2>
+        <h2 class="tit">Search by Title or Author</h2>
         <form action="/searches" method="post">
-            <input type="text" name="input" placeholder="Enter a Title or Auther" required>
-            <label>Title</label>
-            <input type="radio" value="title" name="search" id="title" required>
-            <label>Author</label>
-            <input type="radio" value="Author" name="search" id="Author" required>
-            <button type="submit">Search the Google Books API</button>
+            <input type="text" name="input" placeholder="Enter a Title or Auther" class="input" required>
+            <div class="radio">
+                <label>Title</label>
+                <input type="radio" value="title" name="search" id="title" required>
+            </div>
+            <div class="radio">
+                <label>Author</label>
+                <input type="radio" value="Author" name="search" id="Author" required>
+            </div>
+            <button type="submit" class="adding">Search the Google Books API</button>
         </form>
     </main>
 </body>
+
 </html>
